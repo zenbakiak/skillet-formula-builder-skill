@@ -1,0 +1,53 @@
+{
+  "name": "skillet-formula-builder",
+  "version": "1.0.0",
+  "description": "Expert assistant for creating Skillet expressions with Excel-like formulas and Ruby-style methods",
+  "author": "Your Name <your.email@example.com>",
+  "homepage": "https://github.com/zenbakiak/skillet-formula-builder-skill",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zenbakiak/skillet-formula-builder-skill.git"
+  },
+  "tags": [
+    "skillet",
+    "formula",
+    "excel",
+    "calculator",
+    "business-logic",
+    "tax",
+    "payroll",
+    "data-transformation",
+    "ruby",
+    "functional-programming"
+  ],
+  "skill_file": "skill.md",
+  "min_claude_version": "4.0.0",
+  "license": "MIT",
+  "keywords": [
+    "expression-language",
+    "formula-builder",
+    "isr-calculator",
+    "finiquito",
+    "mexican-tax",
+    "business-calculations",
+    "json-query",
+    "data-processing"
+  ],
+  "category": "productivity",
+  "screenshots": [
+    "screenshots/isr-calculation.png",
+    "screenshots/finiquito-example.png"
+  ],
+  "examples": [
+    "examples/simple-calculation.md",
+    "examples/isr-calculator.md",
+    "examples/finiquito-calculator.md",
+    "examples/business-logic.md"
+  ],
+  "dependencies": {
+    "skillet": ">=0.6.0"
+  },
+  "optional_dependencies": {
+    "skillet-http-server": ">=0.6.0"
+  }
+}
