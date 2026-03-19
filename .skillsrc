@@ -20,7 +20,7 @@
     "ruby",
     "functional-programming"
   ],
-  "skill_file": "skill.md",
+  "skill_file": "SKILL.md",
   "min_claude_version": "4.0.0",
   "license": "MIT",
   "keywords": [

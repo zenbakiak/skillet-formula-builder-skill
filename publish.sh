@@ -23,6 +23,20 @@ fi
 echo "📝 GitHub Username: $GITHUB_USERNAME"
 echo ""
 
+# Check SSH connection to GitHub
+echo "🔑 Verifying SSH connection to GitHub..."
+if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+  echo "✅ SSH authentication successful"
+else
+  echo "⚠️  Warning: SSH authentication to GitHub may not be set up"
+  echo "   If push fails, verify your SSH keys:"
+  echo "   ssh -T git@github.com"
+  echo ""
+  echo "   To set up SSH keys, see:"
+  echo "   https://docs.github.com/en/authentication/connecting-to-github-with-ssh"
+fi
+echo ""
+
 # Replace placeholders in files
 echo "🔄 Updating placeholders with your GitHub username..."
 find . -type f -name "*.md" -exec sed -i '' "s/YOUR_USERNAME/$GITHUB_USERNAME/g" {} +
@@ -57,8 +71,8 @@ if git remote | grep -q origin; then
   echo "ℹ️  Remote 'origin' already exists"
   echo "   Current remote: $(git remote get-url origin)"
 else
-  echo "🔗 Adding remote..."
-  REPO_URL="https://github.com/$GITHUB_USERNAME/skillet-formula-builder-skill.git"
+  echo "🔗 Adding remote (SSH)..."
+  REPO_URL="git@github.com:$GITHUB_USERNAME/skillet-formula-builder-skill.git"
   git remote add origin "$REPO_URL"
   echo "✅ Remote added: $REPO_URL"
 fi
@@ -82,15 +96,18 @@ else
   echo ""
   echo "⚠️  Push failed. This might be because:"
   echo "   1. Repository doesn't exist yet on GitHub"
-  echo "   2. Authentication failed"
+  echo "   2. SSH key authentication failed (check: ssh -T git@github.com)"
   echo "   3. Repository already has different history"
   echo ""
   echo "📋 Next steps:"
-  echo "   1. Create repository on GitHub:"
+  echo "   1. Verify SSH key is set up:"
+  echo "      ssh -T git@github.com"
+  echo ""
+  echo "   2. Create repository on GitHub:"
   echo "      https://github.com/new"
   echo "      Name: skillet-formula-builder-skill"
   echo ""
-  echo "   2. Then run: git push -u origin main"
+  echo "   3. Then run: git push -u origin main"
   exit 1
 fi
 

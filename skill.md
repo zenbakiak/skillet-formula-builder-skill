@@ -1,3 +1,8 @@
+---
+name: Skillet Formula Builder
+description: Expert assistant for creating Skillet expressions with Excel-like formulas and Ruby-style methods. Generates optimized formulas for both CLI and HTTP API usage with complete validation and testing.
+---
+
 # Skillet Formula Builder
 
 Expert assistant for creating Skillet expressions with Excel-like formulas and Ruby-style methods. Generates optimized formulas for both CLI and HTTP API usage with complete validation and testing.
@@ -184,14 +189,6 @@ For complex expressions like object literals or nested function calls, you can b
 - `POWER(base, exp)`, `POW(base, exp)` - Exponentiation
 - `SQRT(number)` - Square root
 
-#### Statistical Functions
-- `MEDIAN(...)` - Median value
-- `MODE.SNGL(...)`, `MODE_SNGL(...)` - Most frequent value
-- `STDEV.P(...)`, `STDEV_P(...)` - Population standard deviation
-- `VAR.P(...)`, `VAR_P(...)` - Population variance
-- `PERCENTILE.INC(array, k)` - k-th percentile (0-1)
-- `QUARTILE.INC(array, quart)` - Quartile (1=Q1, 2=Q2, 3=Q3)
-
 #### Logical Functions
 - `IF(condition, true_val, false_val)` - Conditional
 - `IFS(cond1, val1, cond2, val2, ...)` - Multiple conditions
@@ -214,6 +211,7 @@ For complex expressions like object literals or nested function calls, you can b
 - `TRIM(text)` - Remove whitespace
 - `REVERSE(text)` - Reverse string
 - `SPLIT(text, delimiter)` - Split into array
+- `INCLUDES(text, substring)` - Check if text contains substring
 - `ISNUMBER(value)` - Check if numeric
 - `ISTEXT(value)` - Check if text
 - `ISBLANK(value)` - Check if blank/null
@@ -228,6 +226,7 @@ For complex expressions like object literals or nested function calls, you can b
 - `JOIN(array, [delimiter])` - Join to string
 - `FIRST(array)`, `LAST(array)` - First/last element
 - `CONTAINS(array, value)`, `IN(value, array)` - Check membership
+- `MERGE(array, array, value, ...)` - Merge arrays
 
 #### Higher-Order Functions (Functional Programming)
 - `FILTER(array, :x > condition)` - Filter elements
@@ -262,14 +261,29 @@ For complex expressions like object literals or nested function calls, you can b
   - `pv`: Present value (loan amount)
   - `fv`: Future value (optional, default 0)
   - `type`: Payment timing (0=end, 1=beginning)
+- `FV(rate, nper, pmt, [pv], [type])` - Future value of investment
+  - Calculate future value based on periodic payments
+- `IPMT(rate, per, nper, pv, [fv], [type])` - Interest payment for period
+  - Interest portion of a payment for a specific period
+- `DB(cost, salvage, life, period, [month])` - Declining balance depreciation
+  - Calculate asset depreciation using declining balance method
+
+#### Statistical Functions
+- `MEDIAN(array)` - Median value of array
+- `MODE.SNGL(array)` / `MODESNGL(array)` / `MODE_SNGL(array)` - Most frequent value
+- `STDEV.P(array)` / `STDEVP(array)` / `STDEV_P(array)` - Standard deviation (population)
+- `VAR.P(array)` / `VARP(array)` / `VAR_P(array)` - Variance (population)
+- `PERCENTILE.INC(array, k)` / `PERCENTILEINC(array, k)` - K-th percentile (0 to 1)
+- `QUARTILE.INC(array, quart)` / `QUARTILEINC(array, quart)` - Quartile value (1-4)
 
 #### JSON Functions
-- `DIG(json, ['path', 'to', index, 'key'], [default])` - Navigate nested JSON
-- `JQ(json, "$.jsonpath.expression")` - JSONPath queries
+- `DIG(json, "$.jsonpath.expression")` - JSONPath queries to extract data from JSON
   - `"$.property"` - Access property
   - `"$.array[*]"` - All array elements
   - `"$.array[?(@.field == 'value')]"` - Filter arrays
-  - Use with aggregation: `SUM(JQ(:arguments, "$.sales[*].amount"))`
+  - `"$..field"` - Recursive descent (all matching fields)
+  - Returns single value if 1 result, array if multiple, empty array if none
+  - Use with aggregation: `SUM(DIG(:arguments, "$.sales[*].amount"))`
 
 #### Utility Functions
 - `BETWEEN(min, max, value)` - Range check (inclusive)
@@ -277,25 +291,34 @@ For complex expressions like object literals or nested function calls, you can b
 ### Ruby-Style Methods
 
 #### String Methods
-- `.upper()`, `.lower()` - Change case
-- `.trim()` - Remove whitespace
+- `.upper()` / `.upcase()` - Convert to uppercase
+- `.lower()` / `.downcase()` - Convert to lowercase
+- `.trim()` - Remove leading/trailing whitespace
 - `.reverse()` - Reverse string
-- `.length()` - String length
-- `.includes(substring)` - Check if contains
-- `.blank?` - Check if empty/null
-- `.present?` - Check if not empty
+- `.length()` / `.len()` - String length
+- `.includes(substring)` / `.contains(substring)` - Check if contains substring
+- `.startswith(prefix)` / `.starts_with(prefix)` - Check if starts with prefix
+- `.endswith(suffix)` / `.ends_with(suffix)` - Check if ends with suffix
+- `.split(delimiter)` - Split string into array
+- `.replace(from, to)` - Replace all occurrences
+- `.substring(start, [length])` / `.substr(start, [length])` - Extract substring
 
 #### Array Methods
-- `.length()`, `.size()`, `.count()` - Array length
-- `.first()`, `.last()` - First/last element
+- `.length()` / `.len()` / `.count()` - Array length
+- `.first()` - Get first element
+- `.last()` - Get last element
 - `.reverse()` - Reverse array
 - `.unique()` - Remove duplicates
-- `.compact()` - Remove nulls
-- `.sort([order])` - Sort ("ASC" or "DESC")
-- `.sum()`, `.avg()`, `.min()`, `.max()` - Aggregations
+- `.compact()` - Remove null values
+- `.sort([order])` - Sort array ("ASC" or "DESC", default ASC)
+- `.sum()` - Sum of numeric array
+- `.avg()` / `.average()` - Average of numeric array
+- `.min()` - Minimum value
+- `.max()` - Maximum value
 - `.join([separator])` - Join to string (default: ",")
-- `.contains(value)`, `.includes(value)` - Check membership
-- `.flatten()` - Flatten nested arrays
+- `.contains(value)` / `.includes(value)` - Check if contains value
+- `.flatten()` - Flatten nested arrays (recursive)
+- `.merge(...arrays)` - Merge with other arrays/values
 
 #### Array Higher-Order Methods
 - `.filter(:x > condition)` - Filter elements
@@ -311,13 +334,21 @@ For complex expressions like object literals or nested function calls, you can b
 - `.int()` - Integer part
 - `.sin()`, `.cos()`, `.tan()` - Trigonometric
 
-#### Number Predicate Methods
-- `.positive?` - Is positive
-- `.negative?` - Is negative
-- `.zero?` - Is zero
-- `.even?` - Is even
-- `.odd?` - Is odd
-- `.between(min, max)` - Range check
+#### Predicate Methods (return boolean, end with `?`)
+**Number Predicates:**
+- `.positive?` - Check if number > 0
+- `.negative?` - Check if number < 0
+- `.zero?` - Check if number == 0
+- `.even?` - Check if even number
+- `.odd?` - Check if odd number
+- `.between(min, max)` - Range check (inclusive)
+
+**Type Predicates:**
+- `.numeric?` - Check if value is number type
+- `.array?` - Check if value is array type
+- `.nil?` - Check if value is null
+- `.blank?` - Check if value is blank/empty (null, "", [], or whitespace)
+- `.present?` - Check if value is not blank (opposite of blank?)
 
 #### Type Conversion Methods (Available on ALL types including null!)
 - `.to_s()`, `.to_string()` - Convert to string
@@ -603,7 +634,7 @@ curl -X POST http://localhost:5074/eval \
 - `total`: Sum of all components
 - Result includes all intermediate variables for debugging
 
----
+* * *
 
 ### Example 2: Data Filtering & Transformation
 
@@ -657,7 +688,7 @@ curl -X POST http://localhost:5074/eval \
 - `.sum()`: Sum the discounted prices
 - Method chaining makes the logic clear and readable
 
----
+* * *
 
 ### Example 3: JSONPath Complex Query
 
@@ -708,7 +739,7 @@ curl -X POST http://localhost:5074/eval \
 - `SUM(...)`: Aggregates the filtered amounts
 - More powerful than `.filter()` for complex JSON queries
 
----
+* * *
 
 ### Example 4: Null-Safe Customer Data Processing
 
@@ -764,7 +795,7 @@ curl -X POST http://localhost:5074/eval \
 - No errors thrown even if email is null
 - Alternative: Use `&.` to preserve null values without conversion
 
----
+* * *
 
 ### Example 5: Business Logic with IFS
 
@@ -816,7 +847,7 @@ curl -X POST http://localhost:5074/eval \
 - `include_variables: true`: Returns bonus_rate for debugging
 - Cleaner than nested IF statements for multiple conditions
 
----
+* * *
 
 ### Example 6: Financial Calculation (Loan Payment)
 
@@ -869,7 +900,7 @@ curl -X POST http://localhost:5074/eval \
 - Negative result = money out (payment)
 - Positive result = money in (investment return)
 
----
+* * *
 
 ### Example 7: Date Calculations
 
@@ -907,7 +938,7 @@ curl -X POST http://localhost:5074/eval \
 - `DATEDIFF(d1, d2, "days")`: Days between dates
 - Returns object with both values for client use
 
----
+* * *
 
 ## Common Patterns Library
 

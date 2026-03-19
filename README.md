@@ -11,13 +11,13 @@ The Skillet Formula Builder is a specialized Claude Code skill that helps you cr
 
 ### Features
 
-- ✅ **80+ Built-in Functions** - Excel-compatible functions (SUM, IFS, VLOOKUP, etc.)
-- ✅ **Ruby-Style Methods** - Chain operations (.map, .filter, .sort, .reverse)
-- ✅ **HTTP API Support** - Generates optimized JSON payloads for the Skillet HTTP server
-- ✅ **CLI Support** - Creates ready-to-run command-line expressions
-- ✅ **Comment Support** - Supports `#`, `//`, and `/* */` comments
-- ✅ **Array Format** - Readable multi-line expressions for complex logic
-- ✅ **Real-World Examples** - Mexican tax calculations, payroll, business logic
+- **80+ Built-in Functions** - Excel-compatible functions (SUM, IFS, VLOOKUP, etc.)
+- **Ruby-Style Methods** - Chain operations (.map, .filter, .sort, .reverse)
+- **HTTP API Support** - Generates optimized JSON payloads for the Skillet HTTP server
+- **CLI Support** - Creates ready-to-run command-line expressions
+- **Comment Support** - Supports `#`, `//`, and `/* */` comments
+- **Array Format** - Readable multi-line expressions for complex logic
+- **Real-World Examples** - Mexican tax calculations, payroll, business logic
 
 ## Installation
 
@@ -76,7 +76,7 @@ Or use specific triggers:
   "arguments": {
     "subtotal": 1000
   },
-  "output_json": true
+  "include_variables": false
 }
 ```
 
@@ -113,11 +113,11 @@ curl -X POST http://localhost:3000/eval \
 
 ## Use Cases
 
-- 📊 **Business Calculations** - Tax, payroll, commissions, pricing
-- 🧮 **Data Transformations** - Filter, map, reduce operations
-- 📈 **Financial Modeling** - Interest, amortization, projections
-- ⚖️ **Legal Compliance** - Mexican labor law, tax regulations
-- 🔄 **Workflow Automation** - Decision logic, routing rules
+- **Business Calculations** - Tax, payroll, commissions, pricing
+- **Data Transformations** - Filter, map, reduce operations
+- **Financial Modeling** - Interest, amortization, projections
+- **Legal Compliance** - Mexican labor law, tax regulations
+- **Workflow Automation** - Decision logic, routing rules
 
 ## Features
 
@@ -189,9 +189,8 @@ MIT License - See [LICENSE](LICENSE) file for details
 
 ## Support
 
-- 📧 Email: your.email@example.com
-- 💬 Discord: [Join our community](#)
-- 🐛 Issues: [GitHub Issues](https://github.com/zenbakiak/skillet-formula-builder-skill/issues)
+- Email: barkatu.83 [at] gmail [dot] com
+- Issues: [GitHub Issues](https://github.com/zenbakiak/skillet-formula-builder-skill/issues)
 
 ## Acknowledgments
 
@@ -201,4 +200,4 @@ MIT License - See [LICENSE](LICENSE) file for details
 
 ---
 
-Made with ❤️ for the Claude Code community
+Made with ❤️ by @zenbakiak for the Claude Code community
