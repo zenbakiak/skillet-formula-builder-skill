@@ -1,5 +1,5 @@
 ---
-name: Skillet Formula Builder
+name: skillet-formula-builder
 description: Expert assistant for creating Skillet expressions with Excel-like formulas and Ruby-style methods. Generates optimized formulas for both CLI and HTTP API usage with complete validation and testing.
 ---
 
