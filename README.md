@@ -11,7 +11,7 @@ The Skillet Formula Builder is a specialized Claude Code skill that helps you cr
 
 ### Features
 
-- **80+ Built-in Functions** - Excel-compatible functions (SUM, IFS, VLOOKUP, etc.)
+- **150+ Built-in Functions** - Excel-compatible functions (SUM, IFS, VLOOKUP, etc.)
 - **Ruby-Style Methods** - Chain operations (.map, .filter, .sort, .reverse)
 - **HTTP API Support** - Generates optimized JSON payloads for the Skillet HTTP server
 - **CLI Support** - Creates ready-to-run command-line expressions
